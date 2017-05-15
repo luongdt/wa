@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "937413752895",
+    "firebase_url": "https://twice-d5537.firebaseio.com",
+    "project_id": "twice-d5537",
+    "storage_bucket": "twice-d5537.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937413752895:android:52c06431ce259b8e",
+        "android_client_info": {
+          "package_name": "wa.devhd.com.wa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937413752895-v87dhpt2dimub56t077q5qhi691155qd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "wa.devhd.com.wa",
+            "certificate_hash": "52b65b99f02352991b04e9da30215725f61501a8"
+          }
+        },
+        {
+          "client_id": "937413752895-mvldgnd8dvjlhn3031v7bobuuqr688i4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwkN6SbJOYxdUbweIQDQjNLAUFcUkYb-M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937413752895-mvldgnd8dvjlhn3031v7bobuuqr688i4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

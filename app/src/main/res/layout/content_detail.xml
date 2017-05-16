@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="wa.devhd.com.wa.DetailActivity"
+    tools:showIn="@layout/activity_detail">
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:visibility="visible"
+        android:layout_width="50dp"
+        android:layout_gravity="center"
+        android:layout_height="50dp"
+       />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/iVDetal"
+         />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:background="@drawable/ic_menu_manage"
+            android:layout_height="wrap_content"
+            android:id="@+id/favourite"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_menu_gallery"
+            android:id="@+id/save"/>
+        <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:background="@drawable/ic_menu_share"
+        android:id="@+id/share"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

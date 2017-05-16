@@ -1,29 +1,29 @@
 package wa.devhd.com.wa;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
 import wa.devhd.com.wa.adapter.MainAdapter;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MainAdapter.ItemClickListener {
 
     private ArrayList<String> listUrl = new ArrayList<>();
+    MainAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +57,10 @@ public class MainActivity extends AppCompatActivity
         }
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        MainAdapter contactAdapter = new MainAdapter(listUrl, getBaseContext());
-        recyclerView.setAdapter(contactAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+         adapter = new MainAdapter(listUrl, getBaseContext());
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -97,6 +93,15 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onItemClick(View view, int position) {
+        Log.e("TAG", "You clicked number " + adapter.getItem(position) + ", which is at cell position " + position);
+
+        Intent in = new Intent(this, DetailActivity.class);
+        in.putExtra("url", listUrl.get(position));
+        startActivity(in);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

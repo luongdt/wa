@@ -22,6 +22,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder
 
     private ArrayList<String> contactInfoList;
     private Context mContext;
+    private ItemClickListener mClickListener;
 
     public MainAdapter(ArrayList<String> contactList, Context context) {
         this.contactInfoList = contactList;
@@ -49,14 +50,35 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder
         return contactInfoList.size();
     }
 
-    public static class ItemViewHolder extends RecyclerView.ViewHolder {
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         protected ImageView iV;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             iV = (ImageView) itemView.findViewById(R.id.iVitem);
+            itemView.setOnClickListener(this);
 
         }
+
+        @Override
+        public void onClick(View view) {
+
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
+    }
+    // convenience method for getting data at click position
+    public String getItem(int id) {
+        return contactInfoList.get(id);
+    }
+
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 }

@@ -20,11 +20,11 @@ import wa.devhd.com.wa.R;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder>{
 
 
-    private ArrayList<String> contactInfoList;
+    private String[] contactInfoList;
     private Context mContext;
     private ItemClickListener mClickListener;
 
-    public MainAdapter(ArrayList<String> contactList, Context context) {
+    public MainAdapter(String[] contactList, Context context) {
         this.contactInfoList = contactList;
         mContext = context;
     }
@@ -37,7 +37,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        String url = contactInfoList.get(position);
+        String url = contactInfoList[position];
         Glide.with(mContext)
                 .load(url)
                 .into(holder.iV);
@@ -47,7 +47,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder
 
     @Override
     public int getItemCount() {
-        return contactInfoList.size();
+        return contactInfoList.length;
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -69,7 +69,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder
     }
     // convenience method for getting data at click position
     public String getItem(int id) {
-        return contactInfoList.get(id);
+        return contactInfoList[id];
     }
 
     // allows clicks events to be caught

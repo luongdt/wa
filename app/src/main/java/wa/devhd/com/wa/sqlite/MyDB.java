@@ -19,17 +19,17 @@ public class MyDB {
 
 	private SQLiteDatabase database;
 
-	public final static String EMP_TABLE = "Mydt"; // name of table
+	public final static String EMP_TABLE = "mydata"; // name of table
 
 	public final static String EMP_ID = "_id"; // id value for employee
 	public final static String EMP_THUMBS = "thumbs"; // name of employee
-	public final static String EMP_LIST = "list";
-	public final static String EMP_EDIT = "edit";
-	public final static String EMP_STATUS = "status";
-	public final static String EMP_TOTAL = "total";
-	public final static String EMP_NAME = "name";
+//	public final static String EMP_LIST = "list";
+//	public final static String EMP_EDIT = "edit";
+//	public final static String EMP_STATUS = "status";
+//	public final static String EMP_TOTAL = "total";
+//	public final static String EMP_NAME = "name";
 	public final static String EMP_FAVOURITE = "favourite";
-	public final static String EMP_LISTTHUMBS = "listthumbs";
+//	public final static String EMP_LISTTHUMBS = "listthumbs";
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public class MyDB {
 
 	public int getSize() {
 		database = dbHelper.getReadableDatabase();
-		Cursor c = database.rawQuery("SELECT _id FROM Mydt", null);
+		Cursor c = database.rawQuery("SELECT _id FROM mydata", null);
 
 		c.moveToFirst();
 		int total = c.getCount();
@@ -52,7 +52,7 @@ public class MyDB {
 	}
 	public int getSize2() {
 		database = dbHelper.getReadableDatabase();
-		Cursor c = database.rawQuery("SELECT _id FROM Mydt", null);
+		Cursor c = database.rawQuery("SELECT _id FROM mydata", null);
 
 		c.moveToFirst();
 		int total = c.getCount();
@@ -64,14 +64,14 @@ public class MyDB {
 		ContentValues values = new ContentValues();
 		values.put(EMP_ID, object.getId());
 		values.put(EMP_THUMBS, object.getThumbs());
-		values.put(EMP_EDIT, object.getEdit());
-		values.put(EMP_STATUS, object.getStatus());
-		values.put(EMP_TOTAL, object.getTotal());
-		values.put(EMP_NAME, object.getName());
+	//	values.put(EMP_EDIT, object.getEdit());
+	//	values.put(EMP_STATUS, object.getStatus());
+	//	values.put(EMP_TOTAL, object.getTotal());
+	//	values.put(EMP_NAME, object.getName());
 		values.put(EMP_FAVOURITE,
-				Utilities.convertArrayToStringFav(object.getFavourite()));
-		values.put(EMP_LIST, Utilities.convertArrayToString(object.getList()));
-		values.put(EMP_LISTTHUMBS, Utilities.convertArrayToString(object.getListthumbs()));
+				object.getFavourite());
+	//	values.put(EMP_LIST, Utilities.convertArrayToString(object.getList()));
+	//	values.put(EMP_LISTTHUMBS, Utilities.convertArrayToString(object.getListthumbs()));
 
 		return database.insert(EMP_TABLE, null, values);
 	}
@@ -111,16 +111,15 @@ public class MyDB {
 			do {
 				DataObject m = new DataObject(
 						cursor.getInt(cursor.getColumnIndex(EMP_ID)),
-						cursor.getString(cursor.getColumnIndex(EMP_NAME)),
+					//	cursor.getString(cursor.getColumnIndex(EMP_NAME)),
 						cursor.getString(cursor.getColumnIndex(EMP_THUMBS)),
-						cursor.getInt(cursor.getColumnIndex(EMP_TOTAL)),
-						cursor.getInt(cursor.getColumnIndex(EMP_STATUS)),
-						cursor.getInt(cursor.getColumnIndex(EMP_EDIT)),
-						Utilities.convertStringToArray2(cursor.getString(cursor
-								.getColumnIndex(EMP_LIST))),
-						Utilities.convertStringToArrayFav(cursor
-								.getString(cursor.getColumnIndex(EMP_FAVOURITE))),Utilities.convertStringToArray2(cursor.getString(cursor
-						.getColumnIndex(EMP_LISTTHUMBS))));
+					//	cursor.getInt(cursor.getColumnIndex(EMP_TOTAL)),
+					//	cursor.getInt(cursor.getColumnIndex(EMP_STATUS)),
+					//	cursor.getInt(cursor.getColumnIndex(EMP_EDIT)),
+				//		Utilities.convertStringToArray2(cursor.getString(cursor
+				//				.getColumnIndex(EMP_LIST))),
+						Utilities.convertBoolean(cursor
+								.getInt(cursor.getColumnIndex(EMP_FAVOURITE))));
 
 				list.add(m);
 			} while (cursor.moveToNext());
@@ -221,17 +220,15 @@ public class MyDB {
 
 					DataObject m = new DataObject(
 							cursor.getInt(cursor.getColumnIndex(EMP_ID)),
-							cursor.getString(cursor.getColumnIndex(EMP_NAME)),
+							//	cursor.getString(cursor.getColumnIndex(EMP_NAME)),
 							cursor.getString(cursor.getColumnIndex(EMP_THUMBS)),
-							cursor.getInt(cursor.getColumnIndex(EMP_TOTAL)),
-							cursor.getInt(cursor.getColumnIndex(EMP_STATUS)),
-							cursor.getInt(cursor.getColumnIndex(EMP_EDIT)),
-							Utilities.convertStringToArray2(cursor
-									.getString(cursor.getColumnIndex(EMP_LIST))),
-							Utilities.convertStringToArrayFav(cursor
-									.getString(cursor
-											.getColumnIndex(EMP_FAVOURITE))),Utilities.convertStringToArray2(cursor.getString(cursor
-							.getColumnIndex(EMP_LISTTHUMBS))));
+							//	cursor.getInt(cursor.getColumnIndex(EMP_TOTAL)),
+							//	cursor.getInt(cursor.getColumnIndex(EMP_STATUS)),
+							//	cursor.getInt(cursor.getColumnIndex(EMP_EDIT)),
+							//		Utilities.convertStringToArray2(cursor.getString(cursor
+							//				.getColumnIndex(EMP_LIST))),
+							Utilities.convertBoolean(cursor
+									.getInt(cursor.getColumnIndex(EMP_FAVOURITE))));
 
 					list.add(m);
 				}
@@ -348,18 +345,18 @@ public class MyDB {
 		// database.update(EMP_TABLE, cv, "_id " + "=" + item.getId(), null);
 	}
 
-	public void updateData(DataObject data) throws Exception {
-
-		database.execSQL("UPDATE Mydt SET name='" + data.getName()
-				+ "', thumbs = '" + data.getThumbs() + "', status = "
-				+ data.getStatus() + ", edit = " + data.getEdit()
-				+ ", list = '" + data.getList() + "', total = "
-				+ data.getTotal() + "  WHERE _id=" + data.getId() + "");
-
-		// ContentValues cv = new ContentValues();
-		// cv.put("thumbs", item.getThumbs());
-		// cv.put("link", item.getLink());
-		// cv.put("favourite", item.isFavourite());
-		// database.update(EMP_TABLE, cv, "_id " + "=" + item.getId(), null);
-	}
+//	public void updateData(DataObject data) throws Exception {
+//
+//		database.execSQL("UPDATE Mydt SET name='" + data.getName()
+//				+ "', thumbs = '" + data.getThumbs() + "', status = "
+//				+ data.getStatus() + ", edit = " + data.getEdit()
+//				+ ", list = '" + data.getList() + "', total = "
+//				+ data.getTotal() + "  WHERE _id=" + data.getId() + "");
+//
+//		// ContentValues cv = new ContentValues();
+//		// cv.put("thumbs", item.getThumbs());
+//		// cv.put("link", item.getLink());
+//		// cv.put("favourite", item.isFavourite());
+//		// database.update(EMP_TABLE, cv, "_id " + "=" + item.getId(), null);
+//	}
 }

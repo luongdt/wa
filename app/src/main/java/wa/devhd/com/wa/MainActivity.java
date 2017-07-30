@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -24,6 +25,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdSize;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,22 +36,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import twice.devhd.com.R;
 import wa.devhd.com.wa.adapter.MainAdapter;
 import wa.devhd.com.wa.backgroud.DownloadResultReceiver;
 import wa.devhd.com.wa.backgroud.DownloadService;
 import wa.devhd.com.wa.object.DataObject;
 import wa.devhd.com.wa.sqlite.MyDB;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainAdapter.ItemClickListener,
         DownloadResultReceiver.Receiver {
-
- //   private ArrayList<String> listUrl = new ArrayList<>();
     MainAdapter adapter;
-    final String url = "https://htcone-e1a5c.firebaseapp.com/HtcWall/main.json";
+    final String url = "https://twice-74db8.firebaseapp.com/main1.json";
     private DownloadResultReceiver mReceiver;
     private ArrayList<DataObject> wallpaperListNew = new ArrayList<DataObject>();
     RequestQueue rq;
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +62,20 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+      //  bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+      //  bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "mainscreen");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+       LinearLayout ll = (LinearLayout) findViewById(R.id.adView);
+        mAdView = new AdView(this);
+        ll.addView(mAdView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("6CC527FC424854AA3C7C84D42273BCC9").build();
+        mAdView.setAdSize(AdSize.BANNER);
+        mAdView.setAdUnitId("ca-app-pub-9684523147022787/9840062754");
+        mAdView.loadAd(adRequest);
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -90,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-         adapter = new MainAdapter(wallpaperListNew.get(0).getListthumbs(), getBaseContext());
+         adapter = new MainAdapter(wallpaperListNew, getBaseContext());
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -144,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         Log.e("TAG", "You clicked number " + adapter.getItem(position) + ", which is at cell position " + position);
 
         Intent in = new Intent(this, DetailActivity.class);
-        in.putExtra("url", wallpaperListNew.get(0).getList());
+        in.putExtra("url", wallpaperListNew.get(position).getThumbs());
         startActivity(in);
 
     }
@@ -158,14 +177,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
@@ -219,16 +230,10 @@ public class MainActivity extends AppCompatActivity
                     for (int i = 0; i < js.length(); ++i) {
                         JSONObject jObject = new JSONObject(js.getString(i));
                         DataObject data = new DataObject(jObject.getInt("id"),
-                                jObject.getString("name"),
                                 jObject.getString("thumbs"),
-                                jObject.getInt("total"), jObject.getInt("status"),
-                                jObject.getInt("edit"),
-                                Utilities.convertStringToArray(jObject
-                                        .getString("list")),
-                                Utilities.convertStringToArrayFav(""),Utilities.convertStringToArray(jObject
-                                .getString("list")));
+                                false);
                         try {
-                            Utilities.sMyDb.updateData(data);
+                       //     Utilities.sMyDb.updateData(data);
                         } catch (Exception e) {
                             Utilities.sMyDb.createRecordsInit(data);
                             e.printStackTrace();
@@ -275,17 +280,14 @@ public class MainActivity extends AppCompatActivity
         if (count == 0) {
             try {
                 JSONArray m_jArry = new JSONArray(loadJSONFromAsset()); // obj.getJSONArray("formules");
-                for (int i = 0; i < m_jArry.length(); ++i) {
-                    JSONObject jObject = new JSONObject(m_jArry.getString(i));
-                    DataObject data = new DataObject(jObject.getInt("id"),
-                            jObject.getString("name"),
-                            jObject.getString("thumbs"),
-                            jObject.getInt("total"), jObject.getInt("status"),
-                            jObject.getInt("edit"),
-                            Utilities.convertStringToArray(jObject
-                                    .getString("list")),
-                            Utilities.convertStringToArrayFav(""),Utilities.convertStringToArray(jObject
-                            .getString("listthumbs")));
+              //  JSONObject jsdata = js.getJSONObject("data");
+              //  JSONArray m_jArry = jsdata.ge
+                for (int i = 1; i < m_jArry.length(); ++i) {
+
+                    String jObject = m_jArry.getString(i);
+                    DataObject data = new DataObject(i,jObject
+                           ,
+                           false);
                     Utilities.sMyDb.createRecordsInit(data);
                 }
             } catch (JSONException e) {
@@ -349,14 +351,8 @@ public class MainActivity extends AppCompatActivity
                                 for (int i = count ; i < response.length(); ++i) {
                                     JSONObject jObject = new JSONObject(response.getString(i));
                                     DataObject data = new DataObject(jObject.getInt("id"),
-                                            jObject.getString("name"),
                                             jObject.getString("thumbs"),
-                                            jObject.getInt("total"), jObject.getInt("status"),
-                                            jObject.getInt("edit"),
-                                            Utilities.convertStringToArray(jObject
-                                                    .getString("list")),
-                                            Utilities.convertStringToArrayFav(""),Utilities.convertStringToArray(jObject
-                                            .getString("listthumbs")));
+                                            false);
                                     wallpaperListNew.add(0, data);;
                                     Utilities.sMyDb.createRecordsInit(data);
 

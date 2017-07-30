@@ -8,26 +8,25 @@ import java.util.ArrayList;
 
 public class DataObject implements Parcelable {
 	private int id;
-	private String name;
+//	private String name;
 	private String thumbs;
-	private int total;
-	private int status;
-	private int edit;
-	private String[] list;
-	private String[] listthumbs;
-	private ArrayList<String> favourite;
+//	private int total;
+//	private int status;
+//	private int edit;
+//	private String[] list;
+//	private String[] listthumbs;
+	private boolean favourite;
 
-	public DataObject(int id, String name, String thumbs, int total,
-                      int status, int edit, String[] list, ArrayList<String> favourite, String[] listthumbs) {
+	public DataObject(int id, String thumbs, boolean favourite) {
 		super();
 		this.id = id;
-		this.name = name;
+	//	this.name = name;
 		this.thumbs = thumbs;
-		this.total = total;
-		this.status = status;
-		this.edit = edit;
-		this.list = list;
-		this.listthumbs = listthumbs;
+	//	this.total = total;
+	//	this.status = status;
+	//	this.edit = edit;
+	//	this.list = list;
+	//	this.listthumbs = listthumbs;
 		this.favourite = favourite;
 	}
 
@@ -39,13 +38,13 @@ public class DataObject implements Parcelable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
+	//public String getName() {
+	//	return name;
+//	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	//public void setName(String name) {
+	//	this.name = name;
+	//}
 
 	public String getThumbs() {
 		return thumbs;
@@ -55,51 +54,51 @@ public class DataObject implements Parcelable {
 		this.thumbs = thumbs;
 	}
 
-	public int getTotal() {
-		return total;
-	}
+	//public int getTotal() {
+	//	return total;
+	//}
 
-	public void setTotal(int total) {
-		this.total = total;
-	}
+//	public void setTotal(int total) {
+//		this.total = total;
+//	}
+//
+//	public int getStatus() {
+//		return status;
+//	}
+//
+//	public void setStatus(int status) {
+//		this.status = status;
+//	}
+//
+//	public int getEdit() {
+//		return edit;
+//	}
+//
+//	public void setEdit(int edit) {
+//		this.edit = edit;
+//	}
+//
+//	public String[] getList() {
+//		return list;
+//	}
+//
+//	public String[] getListthumbs() {
+//		return listthumbs;
+//	}
+//
+//	public void setListthumbs(String[] listthumbs) {
+//		this.listthumbs = listthumbs;
+//	}
+//
+//	public void setList(String[] list) {
+//		this.list = list;
+//	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public int getEdit() {
-		return edit;
-	}
-
-	public void setEdit(int edit) {
-		this.edit = edit;
-	}
-
-	public String[] getList() {
-		return list;
-	}
-
-	public String[] getListthumbs() {
-		return listthumbs;
-	}
-
-	public void setListthumbs(String[] listthumbs) {
-		this.listthumbs = listthumbs;
-	}
-
-	public void setList(String[] list) {
-		this.list = list;
-	}
-
-	public ArrayList<String> getFavourite() {
+	public boolean getFavourite() {
 		return favourite;
 	}
 
-	public void setFavourite(ArrayList<String> favourite) {
+	public void setFavourite(boolean favourite) {
 		this.favourite = favourite;
 	}
 
@@ -114,15 +113,15 @@ public class DataObject implements Parcelable {
 		Bundle bundle = new Bundle();
 
 		// insert the key value pairs to the bundle
-		bundle.putString("name", name);
+	//	bundle.putString("name", name);
 		bundle.putInt("_id", this.id);
-		bundle.putInt("total", total);
-		bundle.putInt("edit", edit);
-		bundle.putInt("status", status);
+	//	bundle.putInt("total", total);
+	//	bundle.putInt("edit", edit);
+	//	bundle.putInt("status", status);
 		bundle.putString("thumbs", thumbs);
-		bundle.putStringArray("list", list);
-		bundle.putStringArrayList("favourite", favourite);
-		bundle.putStringArray("listthumbs",listthumbs);
+	//	bundle.putStringArray("list", list);
+		bundle.putBoolean("favourite", favourite);
+	//	bundle.putStringArray("listthumbs",listthumbs);
 
 		// write the key value pairs to the parcel
 		dest.writeBundle(bundle);
@@ -141,10 +140,8 @@ public class DataObject implements Parcelable {
 
 			// instantiate a person using values from the bundle
 			return new DataObject(bundle.getInt("_id"),
-					bundle.getString("name"), bundle.getString("thumbs"),
-					bundle.getInt("total"), bundle.getInt("status"),
-					bundle.getInt("edit"), bundle.getStringArray("list"),
-					bundle.getStringArrayList("favourite"), bundle.getStringArray("listthumbs"));
+					 bundle.getString("thumbs"),
+					bundle.getBoolean("favourite"));
 		}
 
 		@Override

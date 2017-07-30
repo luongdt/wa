@@ -221,6 +221,12 @@ public class Utilities {
 
 		return arr;
 	}
+	public static boolean convertBoolean(int i){
+		if(i == 1)
+			return true;
+		else return false;
+
+	}
 
 	public static String[] convertStringToArray2(String str)
 			throws JSONException {

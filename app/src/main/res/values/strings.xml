@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">wa</string>
+    <string name="app_name">TwiceWallpapers</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -7,4 +7,5 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="facebook_app_id">1329988450372230</string>
+    <string name="mo">ca-app-pub-9684523147022787/9840062754</string>
 </resources>

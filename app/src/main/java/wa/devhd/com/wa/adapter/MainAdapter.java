@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import wa.devhd.com.wa.R;
+import twice.devhd.com.R;
+import wa.devhd.com.wa.object.DataObject;
+
 
 /**
  * Created by Luongdt on 5/16/2017.
@@ -20,12 +22,12 @@ import wa.devhd.com.wa.R;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder>{
 
 
-    private String[] contactInfoList;
+    private ArrayList<DataObject> wallpaperListNew;
     private Context mContext;
     private ItemClickListener mClickListener;
 
-    public MainAdapter(String[] contactList, Context context) {
-        this.contactInfoList = contactList;
+    public MainAdapter(ArrayList<DataObject>  contactList, Context context) {
+        this.wallpaperListNew = contactList;
         mContext = context;
     }
 
@@ -37,7 +39,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        String url = contactInfoList[position];
+        String url = wallpaperListNew.get(position).getThumbs();
         Glide.with(mContext)
                 .load(url)
                 .into(holder.iV);
@@ -47,7 +49,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder
 
     @Override
     public int getItemCount() {
-        return contactInfoList.length;
+        return wallpaperListNew.size();
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -68,8 +70,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ItemViewHolder
         }
     }
     // convenience method for getting data at click position
-    public String getItem(int id) {
-        return contactInfoList[id];
+    public DataObject getItem(int id) {
+        return wallpaperListNew.get(id);
     }
 
     // allows clicks events to be caught
